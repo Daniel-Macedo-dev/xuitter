@@ -1,0 +1,148 @@
+openapi: 3.0.3
+info:
+  title: Xuitter API
+  description: API de exemplo para gerenciamento de usuários e pius (posts curtos).
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8080
+    description: Servidor local
+
+paths:
+  /users:
+    get:
+      summary: Lista todos os usuários
+      responses:
+        '200':
+          description: Lista de usuários retornada com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+    post:
+      summary: Cria um novo usuário
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: Usuário criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /users/{id}:
+    get:
+      summary: Busca usuário por ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Usuário encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: Usuário não encontrado
+    delete:
+      summary: Deleta usuário por ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Usuário deletado com sucesso
+
+  /pius:
+    get:
+      summary: Lista todos os pius
+      responses:
+        '200':
+          description: Lista de pius retornada com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Piu'
+    post:
+      summary: Cria um novo piu
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Piu'
+      responses:
+        '200':
+          description: Piu criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Piu'
+  /pius/{id}:
+    get:
+      summary: Busca piu por ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Piu encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Piu'
+        '404':
+          description: Piu não encontrado
+    delete:
+      summary: Deleta piu por ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Piu deletado com sucesso
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        username:
+          type: string
+          example: danielmacedo
+    Piu:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 10
+        content:
+          type: string
+          example: "Meu primeiro piu!"
+        userId:
+          type: integer
+          example: 1
